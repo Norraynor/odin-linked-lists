@@ -7,31 +7,77 @@ function LinkedList() {
 		while (node.next) {
 			node = node.next;
 		}
-		node.next = value;
+		node.next = LinkedNode(value, null);
 	}
 	function prepend(value) {
 		//add element to start of list
+		let node = list.head;
+		let saveNext = node.next;
+		node.next = LinkedNode(value, saveNext);
 	}
 	function size() {
 		//return elements count
+		let node = list.head;
+		let i = 0;
+		while (node.next) {
+			node = node.next;
+			i++;
+		}
+		return i;
 	}
 	function head() {
 		//return first element
+		return list.head.next;
 	}
 	function tail() {
+		let node = list.head;
 		//return last element
+		while (node.next) {
+			node = node.next;
+		}
+		return node;
 	}
 	function at(index) {
 		//return node at given index
+		let node = list.head;
+		let i = 0;
+		while (i < index) {
+			node = node.next;
+			i++;
+		}
+		return node;
 	}
 	function pop() {
 		//removes last element
+		let node = list.head;
+		while (node.next.next) {
+			node = node.next;
+		}
+		node.next = null;
 	}
 	function contains(value) {
 		//return true if element is found otherwise false
+		let node = list.head;
+		while (node.next) {
+			if (node.value === value) {
+				return true;
+			}
+			node = node.next;
+		}
+		return false;
 	}
 	function find(value) {
 		//return index of element containing value
+		let node = list.head;
+		let i = 0;
+		while (node) {
+			if (node.value === value) {
+				return i;
+			}
+			node = node.next;
+			i++;
+		}
+		return "not found";
 	}
 	function toString() {
 		//represent linked list objects as string
@@ -43,14 +89,53 @@ function LinkedList() {
 	function removeAt(index) {
 		//remove element at given index
 	}
+	function getList() {
+		return list;
+	}
 	return {
-		list,
+		getList,
+		head,
+		tail,
+		append,
+		prepend,
+		size,
+		at,
+		pop,
+		contains,
+		find,
 	};
 }
 
 function LinkedNode(value = null, nextNode = null) {
 	return {
 		value,
-		nextNode,
+		next: nextNode,
 	};
 }
+
+const newList = LinkedList();
+
+console.log(newList);
+console.log({
+	head: newList.head(),
+	list: newList.getList(),
+	tail: newList.tail(),
+	size: newList.size(),
+});
+newList.append("xd");
+console.log(newList.getList());
+newList.append("yolo");
+console.log(newList.getList());
+newList.prepend("wut");
+console.log(newList.getList());
+console.log(newList.size());
+console.log(newList.at(2));
+console.log(newList.tail());
+newList.append("popster");
+console.log(newList.tail());
+newList.pop();
+console.log(newList.tail());
+console.log(newList.contains("xd"));
+console.log(newList.contains("mom"));
+console.log(newList.find("wut"));
+console.log(newList.find("dad"));
