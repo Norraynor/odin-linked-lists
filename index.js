@@ -82,12 +82,36 @@ function LinkedList() {
 	function toString() {
 		//represent linked list objects as string
 		//format: (value)->(value)->null
+		let node = list.head;
+		let valueArr = [];
+		while (node.next) {
+			node = node.next;
+			valueArr.push(node.value);
+		}
+		return valueArr.join(" -> ");
 	}
 	function insertAt(value, index) {
 		//insert new element at given index
+		let node = list.head;
+		let i = 0;
+		while (i < index) {
+			node = node.next;
+			i++;
+		}
+		let saveNext = node.next;
+		node.next = LinkedNode(value, saveNext);
 	}
 	function removeAt(index) {
 		//remove element at given index
+		let node = list.head;
+		let i = 0;
+		while (i < index) {
+			node = node.next;
+			i++;
+		}
+		let saveNext = node.next.next;
+		node.next = saveNext;
+		return node;
 	}
 	function getList() {
 		return list;
@@ -103,6 +127,9 @@ function LinkedList() {
 		pop,
 		contains,
 		find,
+		toString,
+		insertAt,
+		removeAt,
 	};
 }
 
@@ -139,3 +166,8 @@ console.log(newList.contains("xd"));
 console.log(newList.contains("mom"));
 console.log(newList.find("wut"));
 console.log(newList.find("dad"));
+console.log(newList.toString());
+newList.insertAt("penetrate", 1);
+console.log(newList.getList());
+newList.removeAt(1);
+console.log(newList.getList());
